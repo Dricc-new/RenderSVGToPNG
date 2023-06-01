@@ -1,4 +1,4 @@
-export class CreateRenderDTO{
+export class RenderDTO{
     template: string;
     email: string;
     keys: [];

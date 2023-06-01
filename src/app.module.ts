@@ -13,7 +13,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
     username:'root',
     password:'Qwe123asd',
     database:'apirender',
-    entities:[__dirname+'**/*.entity{.ts,.js}'],
+    entities:[__dirname+'/**/*.entity{.ts,.js}'],
     synchronize: true
   })],
   controllers: [AppController],
