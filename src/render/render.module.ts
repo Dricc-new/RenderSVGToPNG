@@ -3,10 +3,10 @@ import { RenderController } from './render.controller';
 import { RenderService } from './render.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Render } from './render.entity';
-import { Package } from './package.entity';
+import { Pack } from './pack.entity';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([Render,Package])],
+  imports: [TypeOrmModule.forFeature([Render,Pack])],
   controllers: [RenderController],
   providers: [RenderService]
 })

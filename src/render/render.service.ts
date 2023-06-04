@@ -1,47 +1,38 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { Package } from './package.entity';
 import { Render } from './render.entity';
-import { CreatePackageDTO } from './dto/package.dto';
+import { CreatePackDTO } from './dto/pack.dto';
 import { CreateRenderDTO } from './dto/create-render.dto';
+import { Pack } from './pack.entity';
 
 @Injectable()
 export class RenderService {
-    constructor(@InjectRepository(Package) private packageRepository: Repository<Package>,
+    constructor(@InjectRepository(Pack) private packRepository: Repository<Pack>,
                 @InjectRepository(Render) private renderRepository: Repository<Render>){}
     
-    async createPackage(packageRender: CreatePackageDTO){
-        const NewPackage = this.packageRepository.create(packageRender);
-        return await this.packageRepository.save(NewPackage);
+    createPack(pack: CreatePackDTO){
+        const NewPack = this.packRepository.create(pack);
+        return this.packRepository.save(NewPack);
     }
 
-    getPackage(id: number){
-        return this.packageRepository.findOne({
-            where:{
-                id
-            }
+    getPack(id: number){
+        return this.packRepository.findOne({
+            where:{id},
+            relations:['renders']
         });
     }
 
-    deletePackage(id: number){
-        this.packageRepository.delete({id});
+    deletePack(id: number){
+        this.packRepository.delete({id});
     }
     
     deleteRender(id: number){
         this.renderRepository.delete({id});
     }
-
-    async createRender(render: CreateRenderDTO){
+    
+    createRender(render: CreateRenderDTO){
         const NewRender = this.renderRepository.create(render);
-        const item = await this.renderRepository.save(NewRender);
-        console.log(item);
-        // una ves guardado el dato en la base de dato comprobamos si ya el packeage esta completo
-        // If completed 
-        //     Send by email
-        //         If it was sent 
-        //             Destroy files
-        //             Destroy items in the database
-        //             Destroy package in the database
+        return this.renderRepository.save(NewRender);
     }
 }

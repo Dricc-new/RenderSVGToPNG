@@ -1,4 +1,5 @@
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
+import { Pack } from "./pack.entity";
 
 @Entity()
 export class Render{
@@ -6,7 +7,10 @@ export class Render{
     id: number;
     
     @Column()
-    package_id: number;
+    packId: number;
+
+    @ManyToOne(() => Pack, pack => pack.id)
+    pack: Pack;
 
     @Column()
     filename: string;

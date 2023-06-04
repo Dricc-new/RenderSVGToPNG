@@ -1,6 +1,6 @@
 export class CreateRenderDTO{
     id: number;
-    package_id: number;
+    packId: number;
     filename: string;    
     created_at: Date;
 }
