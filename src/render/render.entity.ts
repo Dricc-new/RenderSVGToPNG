@@ -6,7 +6,7 @@ export class Render{
     @PrimaryGeneratedColumn()
     id: number;
     
-    @Column()
+    @Column({default: () => null, nullable: true})
     packId: number;
 
     @ManyToOne(() => Pack, pack => pack.id)
