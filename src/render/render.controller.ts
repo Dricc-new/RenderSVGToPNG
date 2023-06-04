@@ -7,6 +7,11 @@ import { CreateRenderDTO } from './dto/create-render.dto';
 const sharp = require("sharp");
 const fs = require('fs/promises');
 const nodemailer = require('nodemailer');
+const QRMaker = require("qrcode");
+
+async function GenerateQR(key: string, value: string){
+    return {key:key,data: await QRMaker.toDataURL(value)};
+}
 
 @Controller('render')
 export class RenderController {
@@ -32,16 +37,23 @@ export class RenderController {
                     // Generate a random filename 
                     const filename = v4();
                     
+                    var QRs = [];
                     // Change the keys to the data in the template 
-                    r.keys.forEach( (key,ind)=> {
-                        if(key[0] == '#')
-                            temp = temp.replace('{{'+key+'}}',element[ind])
+                    r.keys.forEach(( key: string, ind)=> {
+                        if(key[0] == '#'){
+                            QRs.push(GenerateQR(key.replace('#',''),element[ind]))
+                        }
                         else temp = temp.replace('{{'+key+'}}',element[ind]);
                     });
                     
                     //Save the file to local storage and generate it in the database this item
-                    fs.writeFile("./storage/temp/"+filename+".svg",temp)
-                    .then((src = filename) => {
+                    
+                    Promise.all(QRs).then((values)=>{
+                        values.forEach(( item)=> {
+                            temp = temp.replace('{{'+item.key+'}}',item.data);
+                        });
+                        return fs.writeFile("./storage/temp/"+filename+".svg",temp)
+                    }).then((src = filename) => {
 
                         // Convert SVG file to PNG file
                         return sharp("./storage/temp/"+src+".svg").png().toFile("./storage/temp/"+src+".png")
