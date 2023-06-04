@@ -10,7 +10,10 @@ const nodemailer = require('nodemailer');
 const QRMaker = require("qrcode");
 
 async function GenerateQR(key: string, value: string){
-    return {key:key,data: await QRMaker.toDataURL(value)};
+    return {key:key,data: await QRMaker.toDataURL(value,{margin : 1 ,color : { 
+        dark : "#000000ff" ,
+        light : "#00000000" 
+      }})};
 }
 
 @Controller('render')
@@ -114,6 +117,7 @@ export class RenderController {
                         this.renderService.deletePack(data.id)
                         
                     }).catch((err) => {
+                        if(err != 'next')
                         console.log("error: "+err);
                     });
                 });
