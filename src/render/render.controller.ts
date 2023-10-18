@@ -85,17 +85,17 @@ export class RenderController {
 
                         // Send by email
                         const transporter = nodemailer.createTransport({
-                            host: "sandbox.smtp.mailtrap.io",
-                            port: 2525,
+                            host: "localhost",
+                            port: 0,
                             auth: {
-                              user: "5bad6ebe8b94cd",
-                              pass: "cf5036229da671"
+                              user: "support@x01bet.com",
+                              pass: "H6V4CTPe7>"
                             }
                         });
                         
                         return transporter.sendMail({
                             from: '"Fred Foo" <foo@example.com>', // sender address
-                            to: "bar@example.com, baz@example.com", // list of receivers
+                            to: "diegoramoncc17@example.com", // list of receivers
                             subject: "Hello ✔", // Subject line
                             text: "Hello world?", // plain text body
                             html: "<b>Hello world?</b>", // html body
