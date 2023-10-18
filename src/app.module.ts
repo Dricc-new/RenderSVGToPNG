@@ -10,7 +10,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
     type: 'mysql',
     host: 'localhost',
     port: 3306,
-    username:'root',
+    username:'x01bet',
     password:'Qwe123asd',
     database:'apirender',
     entities:[__dirname+'/**/*.entity{.ts,.js}'],
