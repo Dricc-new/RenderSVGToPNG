@@ -10,7 +10,7 @@ async function bootstrap() {
     origin: '*'
   })
 
-  await app.listen(configService.get('PORT'));
+  await app.listen(configService.get('PORT')); 
   console.log('App running on ', `${configService.get('APP_URL')}:${configService.get('PORT')}`)
 }
 bootstrap();
