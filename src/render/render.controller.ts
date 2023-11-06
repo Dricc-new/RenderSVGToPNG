@@ -46,13 +46,13 @@ export class RenderController {
 
 
         const data = await this.renderService.getPack(pack.id)
-
+        
         await this.mailService.sendMail(
-            "diegoramoncc17@example.com",
+            newRender.email,
             "Email de X01bet",
             "Gracias por su compra",
             await fs.readFile(`./storage/template/mail.html`, 'utf-8'),
-            data.renders.map(item => { path: `./storage/temp/${item.filename}.png` })
+            data.renders.map(item => { return { path: `./storage/temp/${item.filename}.png` } })
         )
 
         data.renders.forEach(item => {

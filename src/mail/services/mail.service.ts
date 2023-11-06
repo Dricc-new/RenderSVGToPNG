@@ -4,16 +4,18 @@ const nodemailer = require('nodemailer');
 
 @Injectable()
 export class MailService {
-    constructor(private readonly configService: ConfigService) { }
+    constructor(private readonly configService: ConfigService) { 
+        this.transporter = nodemailer.createTransport({
+            host: this.configService.get('MAIL_HOST'),
+            port: this.configService.get('MAIL_PORT'),
+            auth: {
+                user: this.configService.get('MAIL_USER'),
+                pass: this.configService.get('MAIL_PASSWORD')
+            }
+        })
+    }
 
-    private readonly transporter = nodemailer.createTransport({
-        host: this.configService.get('MAIL_HOST'),
-        port: this.configService.get('MAIL_PORT'),
-        auth: {
-            user: this.configService.get('MAIL_USER'),
-            pass: this.configService.get('MAIL_PASSWORD')
-        }
-    });
+    private transporter: any
 
     sendMail(to: string, subject: string, text: string, html: string, attachments: Array<any>) {
         return this.transporter.sendMail({
