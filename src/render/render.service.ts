@@ -27,12 +27,12 @@ export class RenderService {
         });
     }
 
-    deletePack(id: number) {
-        this.packRepository.delete({ id });
+    async deletePack(id: number) {
+        await this.packRepository.delete({ id });
     }
 
-    deleteRender(id: number) {
-        this.renderRepository.delete({ id });
+    async deleteRender(id: number) {
+        await this.renderRepository.delete({ id });
     }
 
     createRender(render: CreateRenderDTO) {

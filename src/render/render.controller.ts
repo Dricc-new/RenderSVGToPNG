@@ -46,7 +46,7 @@ export class RenderController {
 
 
         const data = await this.renderService.getPack(pack.id)
-        
+
         await this.mailService.sendMail(
             newRender.email,
             "Email de X01bet",
@@ -55,16 +55,14 @@ export class RenderController {
             data.renders.map(item => { return { path: `./storage/temp/${item.filename}.png` } })
         )
 
-        data.renders.forEach(item => {
-            // Delete file
+        for (let i = 0; i < data.renders.length; i++){
+            const item = data.renders[i]         
             fs.unlink("./storage/temp/" + item.filename + ".png")
-
-            // Delete render item
-            this.renderService.deleteRender(item.id)
-        });
+            await this.renderService.deleteRender(item.id)
+        }
 
         // Delete pack in the database
-        this.renderService.deletePack(data.id)
+        await this.renderService.deletePack(data.id)
 
         return 'success';
     }
